@@ -1,18 +1,16 @@
 # Automation Security Review
 
-I reviewed an internal automation system. I left out the organization and customer information. Repository paths, internal addresses, infrastructure identifiers, and secrets aren't included either.
+This review covered an internal automation system that accepted inbound work, created records in other services, retried failed jobs, and gave staff a way to repair incomplete work.
 
-## Why I reviewed it
+## Context
 
-The automation accepted inbound work and created records in other services. It also retried failed jobs and gave staff a way to repair incomplete work.
+I reviewed the points where a valid request could still affect the wrong record, two jobs could collide, or a partial failure could leave staff without enough information to recover safely.
 
-I needed to know more than whether an outside request could reach an endpoint. A valid request could still affect the wrong record. Two valid jobs could collide. A partial failure could leave the next person without enough safe information to recover.
-
-## What I checked
+## Scope
 
 The review covered 138 tracked files. The starting revision passed 1,125 tests across 82 test files, a closed-configuration check, and a deployment dry run. Its production dependency audit had no known advisories.
 
-## Problems I verified
+## Findings
 
 | Problem | Why it mattered | Fix |
 | --- | --- | --- |
@@ -24,8 +22,6 @@ The review covered 138 tracked files. The starting revision passed 1,125 tests a
 | Native error text could reach logs directly | Private or internal details could escape through unexpected exceptions | Log an allowed error class and an incident reference |
 | Tracked test fixtures contained identifying values | Test data could expose information and keep returning in later changes | Replace the fixtures with invented data and scan tracked files for reintroduction |
 
-## What I verified afterward
+## Results
 
 The follow-up implementation fixed all seven findings, added focused regression tests and a security-hardening migration, and increased the passing test count from 1,125 to 1,138.
-
-That number records the test run I checked. It doesn't describe the system today.

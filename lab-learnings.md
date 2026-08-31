@@ -2,6 +2,8 @@
 
 ## Hacker101 CTF
 
+### Progress
+
 My [Hacker101 CTF](https://ctf.hacker101.com/) dashboard shows 31 points and 11 flags.
 
 | Level | Flags |
@@ -11,13 +13,19 @@ My [Hacker101 CTF](https://ctf.hacker101.com/) dashboard shows 31 points and 11 
 | Micro-CMS v2 | 2 / 3 |
 | Postbook | 4 / 7 |
 
-I worked with page, post, profile, and account identifiers instead of assuming the application would enforce ownership everywhere. I tested edit and view routes separately, checked pages that weren't linked in the normal interface, and compared what changed before and after signing in.
+### Strategies
+
+I worked with page, post, profile, and account identifiers instead of assuming the application would enforce ownership everywhere. Edit and view routes needed separate tests, including pages that weren't linked in the normal interface and changes in behaviour before and after signing in.
 
 The 31-point result also put my account above Hacker101's 26-point mark for private-program invitations.
 
 ## PwnBox
 
-At my last checkpoint I had recovered 19 Easy flags. The solved work included:
+### Progress
+
+19 Easy flags recovered.
+
+### Topics
 
 - Authentication proof that wasn't bound tightly enough to the account or transaction
 - A digest comparison that didn't provide the authenticity guarantee the application expected
@@ -31,6 +39,16 @@ At my last checkpoint I had recovered 19 Easy flags. The solved work included:
 - Unsafe raw HTML and filename handling
 - Active SVG upload handling
 
-I kept notes on what I tried and what changed in each response. I tracked flag recovery separately from platform acceptance because they didn't always happen at the same time.
+### Lab Learnings
 
-That work changed how I test. I parse a URL before deciding whether to trust its destination. I bind authentication proof to the account and the exact transaction. I test old identifiers after an authorization system is migrated, and I check ownership at the point where a record is read or changed.
+- Parse a URL before trusting its destination.
+- Bind authentication proof to the account, action, and exact transaction.
+- Test old identifiers after an authorization system is migrated.
+- Check ownership where a record is read or changed.
+- Treat browser messages as untrusted until their origin and event shape are checked.
+
+## OverTheWire
+
+I completed 103 level transitions across nine games, including full runs through Leviathan, Krypton, Narnia, Behemoth, Utumno, and Maze.
+
+[Read the OverTheWire notes](overthewire.md)
