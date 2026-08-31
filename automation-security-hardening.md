@@ -12,7 +12,7 @@ The review covered 138 tracked files. The starting revision passed 1,125 tests a
 
 ## Findings
 
-| Problem | Why it mattered | Fix |
+| Problem | Consequence | Fix |
 | --- | --- | --- |
 | A legacy repair path could run without strong enough evidence connecting the message to the record | A valid repair request could affect the wrong record | Fail closed and bind the claim to the owner, record, action, source event, and expiry |
 | Message filters decided whether inbound work was eligible | The filters didn't prove where the request came from | Require origin evidence before admitting the work |
