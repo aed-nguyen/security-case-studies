@@ -1,6 +1,6 @@
 # Automation Security Review
 
-I reviewed an internal automation system. I left out the organization and customer information. Repository paths, internal addresses, infrastructure identifiers, and secrets are omitted too.
+I reviewed an internal automation system. I left out the organization and customer information. Repository paths, internal addresses, infrastructure identifiers, and secrets aren't included either.
 
 ## Why I reviewed it
 
@@ -10,37 +10,22 @@ I needed to know more than whether an outside request could reach an endpoint. A
 
 ## What I checked
 
-- Authentication and session boundaries
-- Authorization and record separation
-- Forged or replayed requests
-- Input validation and rate limits
-- Audit records and error exposure
-- Concurrent work
-- Recovery after a partial external change
+The review covered 138 tracked files. The starting revision passed 1,125 tests across 82 test files, a closed-configuration check, and a deployment dry run. Its production dependency audit had no known advisories.
 
 ## Problems I verified
 
-- A legacy repair path could continue without strong enough evidence connecting the message to the record it was changing.
-- Inbound eligibility depended on message filters that did not provide complete proof of origin.
-- Concurrent runs could race while creating the same external record.
-- Work admission was not bounded tightly enough per account or across the system.
-- A partial external change did not leave enough safe information for recovery.
-- Native error text could reach logs too directly.
-- Some tracked test fixtures contained identifiers that should have been synthetic.
-
-## How I narrowed the fixes
-
-- Fail closed when required authorization evidence is missing.
-- Bind a claim to the record and permitted action. Include the owner and source event. Give the claim an expiry.
-- Use owner-bound leases with checked state changes for concurrent work.
-- Serialize external creates or make them safe to repeat.
-- Bound the amount of admitted work and keep terminal states explicit.
-- Save only the recovery data needed for a compensating action.
-- Replace raw errors with an allowed class and an incident reference.
-- Replace identifying fixtures with invented data. Scan tracked files so they do not return later.
+| Problem | Why it mattered | Fix |
+| --- | --- | --- |
+| A legacy repair path could run without strong enough evidence connecting the message to the record | A valid repair request could affect the wrong record | Fail closed and bind the claim to the owner, record, action, source event, and expiry |
+| Message filters decided whether inbound work was eligible | The filters didn't prove where the request came from | Require origin evidence before admitting the work |
+| Concurrent jobs could create the same external record | Two valid jobs could leave duplicate or conflicting records | Use owner-bound leases and checked state changes around the create |
+| The queue had no tight per-account or system-wide bound | A valid source could admit more work than the system could safely process | Cap admitted work and keep terminal states explicit |
+| Partial external changes didn't leave enough recovery information | A later repair could repeat the wrong step or lose track of what changed | Save the minimum data needed for a safe compensating action |
+| Native error text could reach logs directly | Private or internal details could escape through unexpected exceptions | Log an allowed error class and an incident reference |
+| Tracked test fixtures contained identifying values | Test data could expose information and keep returning in later changes | Replace the fixtures with invented data and scan tracked files for reintroduction |
 
 ## What I verified afterward
 
-The reviewed revision passed its existing validation suite and deployment dry run. The follow-up implementation added focused regression tests and a security-hardening migration. The last implementation run I observed reported 1,138 passing tests.
+The follow-up implementation fixed all seven findings, added focused regression tests and a security-hardening migration, and increased the passing test count from 1,125 to 1,138.
 
-That number records the state I checked at the time. It is not a claim that an old test run proves the current production system is unchanged or fully secure.
+That number records the test run I checked. It doesn't describe the system today.
