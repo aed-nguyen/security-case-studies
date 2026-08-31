@@ -16,5 +16,3 @@ I ran the proxy with OpenJDK 21 and kept the same packaged proxy file. That remo
 - The standard-input/output handshake completed.
 - Codex reported `Connected. 24 tools available.`
 - The connection used Burp's current packaged proxy.
-
-This gave me a repeatable way to keep the browser proxy, request history, and manual testing in Burp while using Codex to inspect the same testing session.

@@ -4,7 +4,7 @@ This review covered an internal automation system that accepted inbound work, cr
 
 ## Context
 
-I reviewed the points where a valid request could still affect the wrong record, two jobs could collide, or a partial failure could leave staff without enough information to recover safely.
+I reviewed how the system admitted work, created external records, retried failures, and repaired incomplete jobs.
 
 ## Scope
 
@@ -14,7 +14,7 @@ The review covered 138 tracked files. The starting revision passed 1,125 tests a
 
 | Problem | Consequence | Fix |
 | --- | --- | --- |
-| A legacy repair path could run without strong enough evidence connecting the message to the record | A valid repair request could affect the wrong record | Fail closed and bind the claim to the owner, record, action, source event, and expiry |
+| A legacy repair path could run without strong enough evidence connecting the message to the record | A valid repair request could affect the wrong record | Require the owner, record, action, source event, and expiry to match before repair runs |
 | Message filters decided whether inbound work was eligible | The filters didn't prove where the request came from | Require origin evidence before admitting the work |
 | Concurrent jobs could create the same external record | Two valid jobs could leave duplicate or conflicting records | Use owner-bound leases and checked state changes around the create |
 | The queue had no tight per-account or system-wide bound | A valid source could admit more work than the system could safely process | Cap admitted work and keep terminal states explicit |
