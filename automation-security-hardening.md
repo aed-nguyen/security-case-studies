@@ -24,4 +24,4 @@ The review covered 138 tracked files. The starting revision passed 1,125 tests a
 
 ## Results
 
-The follow-up implementation fixed all seven findings, added focused regression tests and a security-hardening migration, and increased the passing test count from 1,125 to 1,138.
+The follow-up implementation added focused regression tests and a security-hardening migration. The passing test count increased from 1,125 to 1,138.

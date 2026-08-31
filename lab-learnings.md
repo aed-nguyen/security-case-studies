@@ -4,8 +4,6 @@
 
 ### Progress
 
-My [Hacker101 CTF](https://ctf.hacker101.com/) dashboard shows 31 points and 11 flags.
-
 | Level | Flags |
 | --- | ---: |
 | A Little Something to Get You Started | 1 / 1 |
@@ -16,8 +14,6 @@ My [Hacker101 CTF](https://ctf.hacker101.com/) dashboard shows 31 points and 11 
 ### Strategies
 
 I worked with page, post, profile, and account identifiers instead of assuming the application would enforce ownership everywhere. Edit and view routes needed separate tests, including pages that weren't linked in the normal interface and changes in behaviour before and after signing in.
-
-The 31-point result also put my account above Hacker101's 26-point mark for private-program invitations.
 
 ## PwnBox
 
@@ -48,7 +44,5 @@ The 31-point result also put my account above Hacker101's 26-point mark for priv
 - Treat browser messages as untrusted until their origin and event shape are checked.
 
 ## OverTheWire
-
-I completed 103 level transitions across nine games, including full runs through Leviathan, Krypton, Narnia, Behemoth, Utumno, and Maze.
 
 [Read the OverTheWire notes](overthewire.md)

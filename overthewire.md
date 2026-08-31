@@ -2,7 +2,7 @@
 
 [OverTheWire](https://overthewire.org/wargames/) is a collection of security wargames covering web security, cryptography, reverse engineering, binary exploitation, networking, and Linux behaviour.
 
-I completed 103 level transitions across nine games.
+[Code from the solved labs](https://github.com/aed-nguyen/security-boundary-demos#lab-tooling)
 
 ## Progress
 
@@ -65,17 +65,17 @@ The work required short-lived local clients and servers, exact ELF layouts, raw-
 
 ### Vortex
 
-Vortex was the most reference-heavy game. I adapted public techniques to the current binaries and rebuilt the working parts against the live service.
+For Vortex, I adapted public techniques to the current binaries and rebuilt the working parts against the live service.
 
 The work included little-endian network exchanges, pointer walking, process-start layout, MD5 brute force, return chains, signal delivery between threads, predictable random streams, heap metadata, RC4 traffic recovery, restricted-key analysis, a Hamming-score oracle, signed arithmetic, negative array indexes, and process-dependent key generation.
 
-The largest computation was a Metal MD5 search on an M4. A custom kernel tested about 200 million candidates per second until the service accepted a 102-bit match against a recovered target digest.
+For level 16, a custom Metal MD5 kernel on an M4 tested about 200 million candidates per second until the service accepted a 102-bit match against a recovered target digest.
 
 ### Manpage
 
 Manpage focused on Linux and C behaviour that changes the outcome of otherwise familiar memory bugs. The first six transitions used stable loader control transfers, signal inheritance, file descriptors surviving `exec`, FIFO timing, a patched Hunt the Wumpus build, and uninitialized stack data.
 
-The most involved level needed a 2,035-byte input spray and a measured 1,304-byte distance from the parser buffer to an uninitialized surname field. A later level used raw bytes in a loader variable to line up `0xdeadbeef` with an uninitialized local after recursive stack frames advanced in 20-byte steps.
+Manpage 4 used a 2,035-byte input spray and a measured 1,304-byte distance from the parser buffer to an uninitialized surname field. Manpage 5 used raw bytes in a loader variable to line up `0xdeadbeef` with an uninitialized local after recursive stack frames advanced in 20-byte steps.
 
 ## Tools
 
